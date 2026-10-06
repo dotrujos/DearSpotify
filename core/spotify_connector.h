@@ -5,9 +5,13 @@
 #ifndef DEARSPOTIFY_SPOTIFY_CONNECTOR_H
 #define DEARSPOTIFY_SPOTIFY_CONNECTOR_H
 
+#include "spotify_types.h"
 
 class spotify_connector {
-
+public:
+    SpotifyAuthResponse authenticate(
+        const std::string& client_id,
+        const std::string& client_secret);
 };
 
 
