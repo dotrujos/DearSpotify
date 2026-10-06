@@ -3,10 +3,13 @@
 //
 
 #include "spotify_connector.h"
+#include "spotify_mapper.h"
 
 #include "cpr/api.h"
 #include "cpr/response.h"
 #include <nlohmann/json.hpp>
+
+#define API_URL "https://api.spotify.com"
 
 using json = nlohmann::json;
 
@@ -22,11 +25,22 @@ SpotifyAuthResponse spotify_connector::authenticate(const std::string &client_id
         return SpotifyAuthResponse{.access_token = "", .token_type = "", .expires_in = -1};
     }
 
-    auto j = json::parse(r.text);
+    return spotify_mapper::from_json_to_auth_response(r.text);
+}
 
-    std::string access_token = j["access_token"].get<std::string>();
-    std::string token_type = j["token_type"].get<std::string>();
-    long expires_in = j["expires_in"].get<long>();
+SpotifyArtistResponse spotify_connector::get_artist(const std::string& artist_id, const std::string& access_token) {
+    std::string full_url = API_URL + std::string("/v1/artists/") + artist_id;
 
-    return SpotifyAuthResponse{.access_token = access_token, .token_type = token_type, .expires_in = expires_in};
+    cpr::Response r = cpr::Get(
+        cpr::Url{full_url},
+        cpr::Header{
+            {"Authorization", "Bearer " + access_token}
+        }
+    );
+
+    if (r.status_code != 200) {
+        // return NULL;
+    }
+
+    
 }
