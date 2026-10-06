@@ -19,6 +19,10 @@ FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
         GIT_TAG 1.14.2)
 FetchContent_MakeAvailable(cpr)
 
+# NLOHMANN JSON
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
+FetchContent_MakeAvailable(json)
+
 enable_testing()
 include(GoogleTest)
 
@@ -28,5 +32,6 @@ add_executable(DearSpotify main.cpp
 
 target_link_libraries(DearSpotify PRIVATE GTest::gtest_main)
 target_link_libraries(DearSpotify PRIVATE cpr::cpr)
+target_link_libraries(DearSpotify PRIVATE nlohmann_json::nlohmann_json)
 
 gtest_discover_tests(DearSpotify)
