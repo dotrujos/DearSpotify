@@ -22,7 +22,9 @@ FetchContent_MakeAvailable(cpr)
 enable_testing()
 include(GoogleTest)
 
-add_executable(DearSpotify main.cpp)
+add_executable(DearSpotify main.cpp
+        core/spotify_connector.cpp
+        core/spotify_connector.h)
 
 target_link_libraries(DearSpotify PRIVATE GTest::gtest_main)
 target_link_libraries(DearSpotify PRIVATE cpr::cpr)
