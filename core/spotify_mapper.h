@@ -2,6 +2,7 @@
 #define DEARSPOTIFY_SPOTIFY_MAPPER_H
 
 #include "spotify_types.h"
+#include <nlohmann/json.hpp>
 
 class spotify_mapper {
 private:

@@ -1,5 +1,3 @@
-#include <nlohmann/json.hpp>
-
 #include "spotify_mapper.h"
 
 using json = nlohmann::json;

@@ -6,6 +6,11 @@
 #define DEARSPOTIFY_SPOTIFY_CONNECTOR_H
 
 #include "spotify_types.h"
+#include "spotify_mapper.h"
+#include <iostream>
+#include "cpr/api.h"
+#include "cpr/response.h"
+#include <nlohmann/json.hpp>
 
 class spotify_connector {
 public:

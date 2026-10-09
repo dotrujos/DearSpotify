@@ -3,11 +3,6 @@
 //
 
 #include "spotify_connector.h"
-#include "spotify_mapper.h"
-#include <iostream>
-#include "cpr/api.h"
-#include "cpr/response.h"
-#include <nlohmann/json.hpp>
 
 #define API_URL "https://api.spotify.com"
 
