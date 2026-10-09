@@ -48,3 +48,69 @@ SpotifyArtistResponse spotify_mapper::from_json_to_get_artist_response(const std
 
     return artist;
 }
+
+SpotifyGetAlbumsResponse spotify_mapper::from_json_to_get_artist_albums_response(const std::string& response) {
+    auto j = json::parse(response);
+
+    SpotifyGetAlbumsResponse result;
+    result.href = j.at("href").get<std::string>();
+    result.limit = j.at("limit").get<int>();
+    result.offset = j.at("offset").get<int>();
+    result.total = j.at("total").get<int>();
+   
+    result.next = j.at("next").is_null() ? "" : j.at("next").get<std::string>();
+    result.previous = j.at("previous").is_null() ? "" : j.at("previous").get<std::string>();
+
+    const auto& items = j.at("items");
+    result.items.reserve(items.size());
+
+    for (const auto& item : items) {
+        SpotifyAlbum album;
+
+        album.album_type = item.at("album_type").get<std::string>();
+        album.total_tracks = item.at("total_tracks").get<int>();
+        album.available_markets = item.at("available_markets").get<std::vector<std::string>>();
+        album.external_urls.spotify = item.at("external_urls").at("spotify").get<std::string>();
+        album.href = item.at("href").get<std::string>();
+        album.id = item.at("id").get<std::string>();
+        album.name = item.at("name").get<std::string>();
+        album.release_date = item.at("release_date").get<std::string>();
+        album.release_date_precision = item.at("release_date_precision").get<std::string>();
+        album.type = item.at("type").get<std::string>();
+        album.uri = item.at("uri").get<std::string>();
+        album.album_group = item.at("album_group").get<std::string>();
+
+        for (const auto& img : item.at("images")) {
+            SpotifyArtistImages image;
+            
+            image.height = img.at("height").get<long>();
+            image.url = img.at("url").get<std::string>();
+            image.width = img.at("width").get<long>();
+
+            album.images.push_back(std::move(image));
+        }
+
+        for (const auto& art : item.at("artists")) {
+            SpotifySimplifiedArtist artist;
+
+            artist.external_urls.spotify = art.at("external_urls").at("spotify").get<std::string>();
+            artist.href = art.at("href").get<std::string>();
+            artist.id = art.at("id").get<std::string>();
+            artist.name = art.at("name").get<std::string>();
+            artist.type = art.at("type").get<std::string>();
+            artist.uri = art.at("uri").get<std::string>();
+
+            album.artists.push_back(std::move(artist));
+        }
+
+        if (item.contains("restrictions")) {
+            SpotifyAlbumRestrictions r;
+            r.reason = item.at("restrictions").at("reason").get<std::string>();
+            album.restrictions = std::move(r);
+        }            
+
+        result.items.push_back(std::move(album));
+    }
+
+    return result;
+}

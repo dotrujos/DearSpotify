@@ -16,6 +16,11 @@ public:
     std::optional<SpotifyArtistResponse> get_artist(
         const std::string& artist_id,
         const std::string& access_token);
+
+    std::optional<SpotifyGetAlbumsResponse> get_artist_albums(
+        const std::string& artist_id,
+        const std::string& access_token
+    );
 };
 
 

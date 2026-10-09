@@ -46,3 +46,21 @@ std::optional<SpotifyArtistResponse> spotify_connector::get_artist(const std::st
 
     return spotify_mapper::from_json_to_get_artist_response(r.text);
 }
+
+std::optional<SpotifyGetAlbumsResponse> spotify_connector::get_artist_albums(const std::string& artist_id, const std::string& access_token) {
+    std::string full_url = API_URL + std::string("/artists/") + artist_id + std::string("/albums");
+
+    cpr::Response r = cpr::Get(
+        cpr::Url{ full_url },
+        cpr::Header{
+            {"Authorization", "Bearer " + access_token}
+        }
+    );
+
+    if (r.status_code != 200) {
+        std::cerr << "err: spotify_connector::get_artist_albums status code = " << r.status_code << std::endl;
+        return std::nullopt;
+    }
+
+    return spotify_mapper::from_json_to_get_artist_albums_response(r.text);
+}
