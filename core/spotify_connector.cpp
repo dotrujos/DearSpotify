@@ -42,5 +42,5 @@ std::optional<SpotifyArtistResponse> spotify_connector::get_artist(const std::st
         return std::nullopt;
     }
 
-    
+    return spotify_mapper::from_json_to_get_artist_response(r.text);
 }
