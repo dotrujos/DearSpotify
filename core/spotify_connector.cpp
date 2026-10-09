@@ -4,7 +4,7 @@
 
 #include "spotify_connector.h"
 #include "spotify_mapper.h"
-
+#include <iostream>
 #include "cpr/api.h"
 #include "cpr/response.h"
 #include <nlohmann/json.hpp>
@@ -22,6 +22,7 @@ std::optional<SpotifyAuthResponse> spotify_connector::authenticate(const std::st
     });
 
     if (r.status_code != 200) {
+        std::cerr << "err: spotify_connector::authenticate status code = " << r.status_code << std::endl;
         return std::nullopt;
     }
 
@@ -39,6 +40,7 @@ std::optional<SpotifyArtistResponse> spotify_connector::get_artist(const std::st
     );
 
     if (r.status_code != 200) {
+        std::cerr << "err: spotify_connector::get_artist status code = " << r.status_code << std::endl;
         return std::nullopt;
     }
 
