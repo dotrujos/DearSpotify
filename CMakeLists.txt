@@ -33,7 +33,8 @@ add_executable(DearSpotify main.cpp
         core/spotify_types.h
         core/spotify_types.h
         core/spotify_mapper.h
-        core/spotify_mapper.cpp)
+        core/spotify_mapper.cpp
+        core/spotify.h)
 
 target_link_libraries(DearSpotify PRIVATE GTest::gtest_main)
 target_link_libraries(DearSpotify PRIVATE cpr::cpr)
