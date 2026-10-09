@@ -9,11 +9,11 @@
 
 class spotify_connector {
 public:
-    SpotifyAuthResponse authenticate(
+    std::optional<SpotifyAuthResponse> authenticate(
         const std::string& client_id,
         const std::string& client_secret);
 
-    SpotifyArtistResponse get_artist(
+    std::optional<SpotifyArtistResponse> get_artist(
         const std::string& artist_id,
         const std::string& access_token);
 };

@@ -13,7 +13,7 @@
 
 using json = nlohmann::json;
 
-SpotifyAuthResponse spotify_connector::authenticate(const std::string &client_id, const std::string &client_secret) {
+std::optional<SpotifyAuthResponse> spotify_connector::authenticate(const std::string &client_id, const std::string &client_secret) {
     cpr::Response r = cpr::Post(
         cpr::Url{"https://accounts.spotify.com/api/token"},
         cpr::Payload{
@@ -22,13 +22,13 @@ SpotifyAuthResponse spotify_connector::authenticate(const std::string &client_id
     });
 
     if (r.status_code != 200) {
-        return SpotifyAuthResponse{.access_token = "", .token_type = "", .expires_in = -1};
+        return std::nullopt;
     }
 
     return spotify_mapper::from_json_to_auth_response(r.text);
 }
 
-SpotifyArtistResponse spotify_connector::get_artist(const std::string& artist_id, const std::string& access_token) {
+std::optional<SpotifyArtistResponse> spotify_connector::get_artist(const std::string& artist_id, const std::string& access_token) {
     std::string full_url = API_URL + std::string("/v1/artists/") + artist_id;
 
     cpr::Response r = cpr::Get(
@@ -39,7 +39,7 @@ SpotifyArtistResponse spotify_connector::get_artist(const std::string& artist_id
     );
 
     if (r.status_code != 200) {
-        // return NULL;
+        return std::nullopt;
     }
 
     
