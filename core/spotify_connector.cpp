@@ -12,6 +12,7 @@ std::optional<SpotifyAuthResponse> spotify_connector::authenticate(const std::st
     cpr::Response r = cpr::Post(
         cpr::Url{"https://accounts.spotify.com/api/token"},
         cpr::Payload{
+        {"grant_type", "client_credentials"},
         {"client_id", client_id},
         {"client_secret", client_secret}
     });
@@ -43,7 +44,7 @@ std::optional<SpotifyArtistResponse> spotify_connector::get_artist(const std::st
 }
 
 std::optional<SpotifyGetAlbumsResponse> spotify_connector::get_artist_albums(const std::string& artist_id, const std::string& access_token) {
-    std::string full_url = API_URL + std::string("/artists/") + artist_id + std::string("/albums");
+    std::string full_url = API_URL + std::string("/v1/artists/") + artist_id + std::string("/albums");
 
     cpr::Response r = cpr::Get(
         cpr::Url{ full_url },
