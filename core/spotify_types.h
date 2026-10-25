@@ -5,6 +5,7 @@
 #ifndef DEARSPOTIFY_SPOTIFY_TYPES_H
 #define DEARSPOTIFY_SPOTIFY_TYPES_H
 
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -12,6 +13,21 @@ struct SpotifyAuthResponse {
     std::string access_token;
     std::string token_type;
     long expires_in;
+};
+
+struct SpotifyExternalUrl {
+    std::string spotify;
+};
+
+struct SpotifyArtistFollwers {
+    std::string href;
+    long total;
+};
+
+struct SpotifyArtistImages {
+    long height;
+    std::string url;
+    long width;
 };
 
 struct SpotifyArtistResponse {
@@ -25,21 +41,6 @@ struct SpotifyArtistResponse {
     std::vector<SpotifyArtistImages> images;
     std::string type;
     std::string uri;
-};
-
-struct SpotifyArtistImages {
-    long height;
-    std::string url;
-    long width;
-};
-
-struct SpotifyArtistFollwers {
-    std::string href;
-    long total;
-};
-
-struct SpotifyExternalUrl {
-    std::string spotify;
 };
 
 struct SpotifyAlbumRestrictions {
